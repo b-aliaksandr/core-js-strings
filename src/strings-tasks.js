@@ -37,8 +37,13 @@ function getStringLength(/* value */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  const type = typeof value;
+  if (type === 'string') return true;
+  if (type === 'object' && value !== null) {
+    return typeof value.valueOf() === 'string';
+  }
+  return false;
 }
 
 /**
