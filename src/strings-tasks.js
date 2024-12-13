@@ -5,6 +5,12 @@
  *                                                                                           *
  ******************************************************************************************* */
 
+function removeOccurrences(str, value, startIndex) {
+  if (startIndex === -1) return str;
+  const endIndex = startIndex + value.length - 1;
+  return str.slice(0, startIndex).concat(str.slice(endIndex + 1));
+}
+
 /**
  * Returns the length of the given string.
  *
@@ -155,9 +161,7 @@ function repeatString(str, times) {
  */
 function removeFirstOccurrences(str, value) {
   const startIndex = str.indexOf(value);
-  if (startIndex === -1) return str;
-  const endIndex = startIndex + value.length - 1;
-  return str.slice(0, startIndex).concat(str.slice(endIndex + 1));
+  return removeOccurrences(str, value, startIndex);
 }
 
 /**
