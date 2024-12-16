@@ -538,8 +538,35 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const AMOUNT_SHIFT = 13;
+  const START_UPPER_INDEX = 65;
+  const END_UPPER_INDEX = 90;
+  const START_LOWER_INDEX = 97;
+  const END_LOWER_INDEX = 122;
+
+  const calcEncodedIndex = (curIndex, startLimit, endLimit) => {
+    const resIndex = curIndex + AMOUNT_SHIFT;
+    const amountFix = 1;
+
+    return resIndex <= endLimit
+      ? resIndex
+      : startLimit + Math.abs(endLimit - curIndex - AMOUNT_SHIFT + amountFix);
+  };
+
+  const resArr = [...str].map((ch) => {
+    const chIndex = ch.charCodeAt(0);
+
+    if (chIndex >= START_UPPER_INDEX && chIndex <= END_UPPER_INDEX) {
+      return calcEncodedIndex(chIndex, START_UPPER_INDEX, END_UPPER_INDEX);
+    }
+    if (chIndex >= START_LOWER_INDEX && chIndex <= END_LOWER_INDEX) {
+      return calcEncodedIndex(chIndex, START_LOWER_INDEX, END_LOWER_INDEX);
+    }
+
+    return chIndex;
+  });
+  return String.fromCharCode(...resArr);
 }
 
 /**
